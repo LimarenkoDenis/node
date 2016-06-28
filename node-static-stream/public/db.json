@@ -1,0 +1,44 @@
+{
+  "cards": [
+    {
+      "id": 0,
+      "title": "title1",
+      "description": "descr1",
+      "date": "21 May, 2015",
+      "count": 22,
+      "price": 14
+    },
+    {
+      "id": 1,
+      "title": "title2",
+      "description": "desr2",
+      "date": "21 May, 2015",
+      "count": 5,
+      "price": 2
+    },
+    {
+      "title": "default title",
+      "description": "default description",
+      "count": null,
+      "price": 0,
+      "id": 2,
+      "date": "2016-06-16T14:34:20.209Z"
+    },
+    {
+      "title": "default title",
+      "description": "default description",
+      "count": 0,
+      "price": 0,
+      "id": 3,
+      "date": "2016-06-16T14:34:34.522Z"
+    },
+    {
+      "title": "default title",
+      "description": "default description",
+      "count": 1205,
+      "price": 12,
+      "id": 4,
+      "date": "2016-06-16T14:36:43.201Z"
+    }
+  ]
+}
