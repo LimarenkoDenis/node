@@ -1,9 +1,19 @@
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const loader = require('./lib/dispetcher');
 
-loader.init()
+const app = express();
 
-app.listen(4000, () => {
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(cors());
+
+loader.init(app);
+
+app.listen(3000, () => {
   console.log(`beckend started`);
 });
