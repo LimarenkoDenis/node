@@ -41,14 +41,14 @@ app.post('/cards', (req, res) => {
   const newCard = req.body;
   newCard.id = Math.max.apply(Math, cards.map(card => card.id)) + 1;
   cards.push(newCard);
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.delete('/cards/:id', (req, res) => {
   const id = +req.params.id;
   const index = cards.findIndex(item => item.id === id);
   cards.splice(index, 1);
-  res.send(204);
+  res.sendStatus(204);
 });
 
 app.put('/cards/:id', (req, res) => {
@@ -57,9 +57,9 @@ app.put('/cards/:id', (req, res) => {
   const card = req.body;
   card.date = new Date;
   cards.splice(index, 1, card);
-  res.send(200);
+  res.sendStatus(204);
 });
 
-app.listen(8800, () => {
+app.listen(3000, () => {
   console.log('beckend started');
 });
