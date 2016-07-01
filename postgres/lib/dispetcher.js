@@ -2,8 +2,8 @@ const glob = require('glob');
 const path = require('path');
 
 module.exports = {
-  init: function(app) {
-    glob("controller/*.js", function(er, files) {
+  init: (app) => {
+    glob('controller/*.js', (er, files) => {
       files.map(file => {
         const controller = require(path.join('..', file));
         for (action in controller) {

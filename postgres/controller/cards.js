@@ -1,19 +1,6 @@
-// const Sequelize = require('sequelize');
-// const sequelize = new Sequelize('app', 'postgres', '123', {
-//   dialect: 'postgres',
-//   port: 5432,
-// });
-
-// const Cards = sequelize.define('Cards', {
-//   title: Sequelize.STRING,
-//   description: Sequelize.STRING,
-//   count: Sequelize.INTEGER,
-//   price: Sequelize.DOUBLE
-// });
 const models = require('../models');
-// console.log(models);
 module.exports = {
-  'GET /cards': function (req, res)  {
+  'GET /cards': (req, res) => {
     models.Cards.findAll().then(Cards => {
       res.send(Cards);
     });
@@ -21,28 +8,39 @@ module.exports = {
 
   'POST /cards': (req, res) => {
     const newCard = req.body;
-    return Cards.create(newCard).then(() => {
-      res.end()
+    return models.Cards.create(newCard).then(() => {
+      res.end();
     });
   },
 
   'DELETE /cards/:id': (req, res) => {
-    Cards.destroy({
+    models.Cards.destroy({
       where: {
         id: req.params.id
       }
-    }).then(Cards => {
+    }).then(() => {
       res.end('204');
     });
   },
+
+  'PUT /cards/:id': (req, res) => {
+    const updCard = req.body;
+    models.Cards.update(updCard, {
+      where: {
+        id: req.params.id
+      }
+    }).then(() => {
+      res.end('200');
+    });
+  }
 };
 
 models.sequelize
   .sync({
     force: false
   })
-  .then(function(err) {
+  .then(() => {
     console.log('It worked!');
-  }, function(err) {
+  }, (err) => {
     console.log('An error occurred while creating the table:', err);
   });
