@@ -1,9 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
   const Cards = sequelize.define('Cards', {
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {}
+    },
     description: DataTypes.STRING,
-    count: DataTypes.INTEGER,
-    price: DataTypes.DOUBLE
+    count: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: -1
+      }
+    },
+    price: {
+      type: DataTypes.DOUBLE,
+      validation: {
+        min: -1
+      }
+    }
   });
 
   return Cards;

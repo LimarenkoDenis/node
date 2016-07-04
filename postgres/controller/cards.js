@@ -1,7 +1,15 @@
 const models = require('../models');
 module.exports = {
   'GET /cards': (req, res) => {
-    models.Cards.findAll().then(Cards => {
+    let limit = req.query.limit;
+    let offset = req.query.offset;
+    if (!limit) {
+      limit = 3;
+    }
+    models.Cards.findAll({
+      offset: offset,
+      limit: limit
+    }).then(Cards => {
       res.send(Cards);
     });
   },
