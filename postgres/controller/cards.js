@@ -1,27 +1,27 @@
 const models = require('../models');
 module.exports = {
   'GET /cards': (req, res) => {
-    let limit = req.query.limit;
-    let offset = req.query.offset;
-    if (!limit) {
-      limit = 3;
-    }
-    models.Cards.findAll({
-      offset: offset,
-      limit: limit
-    }).then(Cards => {
+    const defaultParams = {
+      limit: 5,
+      offset: 0,
+      order: [
+        ['updatedAt', 'DESC']
+      ]
+    };
+    const settings = Object.assign(defaultParams, req.query);
+    models.Cards.findAll(settings).then(Cards => {
       res.send(Cards);
     });
   },
 
-  'POST /cards': (req, res) => {
+  'POST /api/cards': (req, res) => {
     const newCard = req.body;
     return models.Cards.create(newCard).then(() => {
-      res.end();
+      res.end('200');
     });
   },
 
-  'DELETE /cards/:id': (req, res) => {
+  'DELETE /api/cards/:id': (req, res) => {
     models.Cards.destroy({
       where: {
         id: req.params.id
@@ -31,7 +31,7 @@ module.exports = {
     });
   },
 
-  'PUT /cards/:id': (req, res) => {
+  'PUT /api/cards/:id': (req, res) => {
     const updCard = req.body;
     models.Cards.update(updCard, {
       where: {
