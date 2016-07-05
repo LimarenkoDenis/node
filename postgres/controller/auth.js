@@ -16,6 +16,7 @@ module.exports = {
   },
 
   'POST /authenticate': (req, res) => {
+    console.log(req.body);
     models.Users.findOne({
       where: {
         name: req.body.name
@@ -33,8 +34,8 @@ module.exports = {
             message: 'Authentication failed. Wrong password.'
           });
         } else {
-          const token = jwt.sign(user.dataValues, config.secret, {
-            expiresIn: 8886400 // expires in 24 hours
+          const token = jwt.sign(user.get({ plain: true }), config.secret, {
+            expiresIn: 8886400
           });
           res.json({
             success: true,
