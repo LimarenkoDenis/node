@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
   jwt: function (req, res, next) {
@@ -18,7 +17,7 @@ module.exports = {
         next();
       });
     } else {
-      req.role = 'guest'
+      req.role = 'guest';
       next();
     }
   }

@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 
-// app.use('/api', verify.apiRoutes);
 app.use(morgan('dev'));
 app.use('/', verify.jwt);
 loader.init(app);

@@ -49,7 +49,7 @@ models.sequelize
     force: false
   })
   .then(() => {
-    console.log('It worked!');
+    console.log('cards module worked!');
   }, (err) => {
-    console.log('An error occurred while creating the table:', err);
+    console.log('cards module:', err);
   });

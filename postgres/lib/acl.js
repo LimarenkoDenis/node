@@ -24,14 +24,10 @@ acl.allow([{
 
 module.exports = (resources, permissions) => {
   return (req, res, next) => {
-    let role = req.role;
-    console.log(role);
     acl.areAnyRolesAllowed(req.role, resources, permissions, (err, allowed) => {
       if (allowed) {
-        console.log(role, resources, permissions);
         next();
       } else {
-        console.log(role, resources, permissions);
         return res.status(403).send({
           success: false,
           message: 'No token provided.'
