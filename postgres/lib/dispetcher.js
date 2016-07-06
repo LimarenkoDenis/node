@@ -2,7 +2,6 @@ const glob = require('glob');
 const path = require('path');
 const acl = require('./acl.js');
 
-// console.log(acl);
 module.exports = {
   init: (app) => {
     glob('controller/*.js', (er, files) => {

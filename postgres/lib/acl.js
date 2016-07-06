@@ -1,7 +1,6 @@
 const Acl = require('acl');
 const acl = new Acl(new Acl.memoryBackend());
 const jwt = require('jsonwebtoken');
-// const jwtV = require('./jwt.js');
 
 acl.allow([{
   roles: ['guest'],
@@ -25,27 +24,8 @@ acl.allow([{
 
 module.exports = (resources, permissions) => {
   return (req, res, next) => {
-    let role = 'guest';
-    // const token = req.body.token || req.query.token || req.headers['x-access-token'];
-    // console.log(token);
-    // if (token) {
-    //   jwt.verify(token, 'ilovescotchyscotch', (err, decoded) => {
-    //     if (err) {
-    //       role = 'guest'
-    //       return res.json({
-    //         success: false,
-    //         message: 'Failed to authenticate token.'
-    //       });
-    //     } else {
-    //       role = 'admin';
-    //       req.decoded = decoded;
-    //       next();
-    //     }
-    //   });
-    // } else {
-    //   role = 'guest'
-    // }
-
+    let role = req.role;
+    console.log(role);
     acl.areAnyRolesAllowed(role, resources, permissions, (err, allowed) => {
       if (allowed) {
         console.log(role, resources, permissions);

@@ -1,27 +1,25 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const env = process.env.NODE_ENV || 'development';
 const config = require('./../config/config.json')[env];
 let role = 'guest';
 
+
 const token = req.body.token || req.query.token || req.headers['x-access-token'];
 if (token) {
-  jwt.verify(token, config.secret, (err, decoded) => {
+  jwt.verify(token, 'ilovescotchyscotch', (err, decoded) => {
     if (err) {
+      role = 'guest'
       return res.json({
         success: false,
         message: 'Failed to authenticate token.'
       });
-    } else {
-      role = 'admin';
-      req.decoded = decoded;
-      next();
     }
+    role = 'admin';
+    req.decoded = decoded;
+    next();
   });
 } else {
-  return res.status(403).send({
-    success: false,
-    message: 'No token provided.'
-  });
+  role = 'guest'
 }
+
 module.exports = role;
