@@ -4,8 +4,7 @@ const cors = require('cors');
 const loader = require('./lib/dispetcher');
 const app = express();
 const morgan = require('morgan');
-const jwt = require('jsonwebtoken');
-// const verify = require('./middleware/verify.js');
+const verify = require('./middleware/verify.js');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,26 +15,7 @@ app.use(cors());
 
 // app.use('/api', verify.apiRoutes);
 app.use(morgan('dev'));
-app.use('/', function (req, res, next) {
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  if (token) {
-    jwt.verify(token, 'ilovescotchyscotch', (err, decoded) => {
-      if (err) {
-        req.role = 'guest'
-        return res.json({
-          success: false,
-          message: 'Failed to authenticate token.'
-        });
-      }
-      req.role = 'admin';
-      req.decoded = decoded;
-      next();
-    });
-  } else {
-    req.role = 'guest'
-    next();
-  }
-});
+app.use('/', verify.jwt);
 loader.init(app);
 
 app.listen(3000, () => {
