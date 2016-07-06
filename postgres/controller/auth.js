@@ -5,18 +5,8 @@ const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env]
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-  'GET /SETUP': (req, res) => {
-    res.end('login');
-  },
-
-  'GET /api/users': (req, res) => {
-    models.Users.findAll().then(users => {
-      res.send(users);
-    });
-  },
-
+  resources: 'authenticate',
   'POST /authenticate': (req, res) => {
-    console.log(req.body);
     models.Users.findOne({
       where: {
         name: req.body.name
@@ -53,7 +43,7 @@ models.sequelize
     force: false
   })
   .then(() => {
-    console.log('users module worked!');
+    console.log('auth module worked!');
   }, (err) => {
     console.log('An error occurred while creating the table:', err);
   });

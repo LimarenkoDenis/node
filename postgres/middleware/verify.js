@@ -5,7 +5,7 @@ const config = require('./../config/config.json')[env];
 const apiRoutes = express.Router();
 
 module.exports = {
-  apiRoutes: apiRoutes.use(function(req, res, next) {
+  apiRoutes: apiRoutes.use((req, res, next) => {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
       jwt.verify(token, config.secret, (err, decoded) => {
@@ -26,4 +26,4 @@ module.exports = {
       });
     }
   })
-}
+};

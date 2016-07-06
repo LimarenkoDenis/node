@@ -4,7 +4,7 @@ const cors = require('cors');
 const loader = require('./lib/dispetcher');
 const app = express();
 const morgan = require('morgan');
-const verify = require('./middleware/verify.js');
+// const verify = require('./middleware/verify.js');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,10 +13,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 
+// app.use('/api', verify.apiRoutes);
 loader.init(app);
 app.use(morgan('dev'));
 
-app.use('/api', verify.apiRoutes);
 
 app.listen(3000, () => {
   console.log(`backend started`);

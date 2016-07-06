@@ -1,5 +1,6 @@
 const models = require('../models');
 module.exports = {
+  resources: 'cards',
   'GET /cards': (req, res) => {
     const defaultParams = {
       limit: 5,
@@ -10,18 +11,18 @@ module.exports = {
     };
     const settings = Object.assign(defaultParams, req.query);
     models.Cards.findAll(settings).then(Cards => {
-      res.send(Cards);
+      res.send('200', Cards);
     });
   },
 
-  'POST /api/cards': (req, res) => {
+  'POST /cards': (req, res) => {
     const newCard = req.body;
     return models.Cards.create(newCard).then(() => {
       res.end('200');
     });
   },
 
-  'DELETE /api/cards/:id': (req, res) => {
+  'DELETE /cards/:id': (req, res) => {
     models.Cards.destroy({
       where: {
         id: req.params.id
@@ -31,7 +32,7 @@ module.exports = {
     });
   },
 
-  'PUT /api/cards/:id': (req, res) => {
+  'PUT /cards/:id': (req, res) => {
     const updCard = req.body;
     models.Cards.update(updCard, {
       where: {
