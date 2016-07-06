@@ -26,7 +26,7 @@ module.exports = (resources, permissions) => {
   return (req, res, next) => {
     let role = req.role;
     console.log(role);
-    acl.areAnyRolesAllowed(role, resources, permissions, (err, allowed) => {
+    acl.areAnyRolesAllowed(req.role, resources, permissions, (err, allowed) => {
       if (allowed) {
         console.log(role, resources, permissions);
         next();

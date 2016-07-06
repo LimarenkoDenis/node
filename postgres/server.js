@@ -17,8 +17,24 @@ app.use(cors());
 // app.use('/api', verify.apiRoutes);
 app.use(morgan('dev'));
 app.use('/', function (req, res, next) {
-  req.role = 'admin';
-  next();
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, 'ilovescotchyscotch', (err, decoded) => {
+      if (err) {
+        req.role = 'guest'
+        return res.json({
+          success: false,
+          message: 'Failed to authenticate token.'
+        });
+      }
+      req.role = 'admin';
+      req.decoded = decoded;
+      next();
+    });
+  } else {
+    req.role = 'guest'
+    next();
+  }
 });
 loader.init(app);
 
