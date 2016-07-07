@@ -7,10 +7,7 @@ module.exports = {
       jwt.verify(token, 'ilovescotchyscotch', (err, decoded) => {
         if (err) {
           req.role = 'guest'
-          return res.json({
-            success: false,
-            message: 'Failed to authenticate token.'
-          });
+          return res.send('403');
         }
         req.role = 'admin';
         req.decoded = decoded;

@@ -18,5 +18,5 @@ app.use('/', verify.jwt);
 loader.init(app);
 
 app.listen(3000, () => {
-  console.log(`backend started`);
+  console.log('backend started');
 });
