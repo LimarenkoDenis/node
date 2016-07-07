@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 app.use(morgan('dev'));
-app.use('/', verify.jwt);
+app.use('', verify.jwt);
 loader.init(app);
 
 app.listen(3000, () => {

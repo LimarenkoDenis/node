@@ -1,26 +1,8 @@
 const Acl = require('acl');
 const acl = new Acl(new Acl.memoryBackend());
-const jwt = require('jsonwebtoken');
+const role = require('./../config/permissions.js');
 
-acl.allow([{
-  roles: ['guest'],
-  allows: [{
-    resources: 'cards',
-    permissions: 'get'
-  }, {
-    resources: ['authenticate'],
-    permissions: ['post']
-  }]
-}, {
-  roles: ['admin'],
-  allows: [{
-    resources: 'cards',
-    permissions: ['get', 'post', 'put', 'delete']
-  }, {
-    resources: ['users'],
-    permissions: ['get']
-  }]
-}]);
+acl.allow(role);
 
 module.exports = (resources, permissions) => {
   return (req, res, next) => {

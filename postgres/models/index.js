@@ -6,6 +6,15 @@ const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env]
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 const db = {};
 
+sequelize
+  .authenticate()
+  .then(err => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.log('Unable to connect to the database:', err);
+  });
+
 fs
   .readdirSync(__dirname)
   .filter(file => {

@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
-    admin: {
-      type: DataTypes.BOOLEAN
+    role: {
+      type: DataTypes.STRING
     }
   });
 

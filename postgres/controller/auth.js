@@ -1,8 +1,8 @@
-const models = require('../models');
 const path = require('path');
 const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 const jwt = require('jsonwebtoken');
+const models = require('../models');
 
 module.exports = {
   resources: 'authenticate',
@@ -24,26 +24,19 @@ module.exports = {
             message: 'Authentication failed. Wrong password.'
           });
         } else {
-          const token = jwt.sign(user.get({ plain: true }), config.secret, {
-            expiresIn: 8886400
+          const tokenKey = jwt.sign(user.get({ plain: true }), config.secret, {
+            expiresIn: 86400 // 24 hours
           });
           res.json({
+            // user: user.role,
             success: true,
             message: 'Enjoy your token!',
-            token: token
+            token: tokenKey
           });
         }
       }
+    }).catch((e) => {
+      console.log(JSON.stringify(e));
     });
   }
 };
-
-models.sequelize
-  .sync({
-    force: false
-  })
-  .then(() => {
-    console.log('auth module worked!');
-  }, (err) => {
-    console.log('An error occurred while creating the table:', err);
-  });
