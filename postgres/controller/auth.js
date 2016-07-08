@@ -27,7 +27,9 @@ module.exports = {
             message: 'Authentication failed. Wrong password.'
           });
         } else {
-          const tokenKey = jwt.sign(user.get({ plain: true }), config.secret, {
+          const tokenKey = jwt.sign(user.get({
+            plain: true
+          }), config.secret, {
             expiresIn: 86400 // 24 hours
           });
           res.json({
@@ -45,8 +47,6 @@ module.exports = {
 
   'POST /signUp': (req, res) => {
     const recipient = req.body.email;
-    // const password = req.body.password;
-    // const name = req.body.name;
     const token = jwt.sign(req.body, config.secret);
     console.log(token);
     const mailOptions = getMailOptions(recipient, token);
@@ -68,6 +68,7 @@ module.exports = {
         role: 'user',
       };
       const settings = Object.assign(defaultValue, user);
+      console.log(settings);
       return models.Users.create(settings)
       .then(() => {
         res.end('200');
@@ -77,3 +78,18 @@ module.exports = {
     }
   }
 };
+
+//
+// if (models.Users.findOne({
+//     where: {
+//       name: user.name,
+//     }
+//   })) {
+//   return res.end('403');
+// } else {
+//   return models.Users.create(settings)
+//     .then(() => {
+//       res.end('200');
+//     }).catch((e) => {
+//       console.log(JSON.stringify(e));
+//     });
