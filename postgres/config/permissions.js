@@ -14,6 +14,12 @@ module.exports = [
           'POST /authenticate',
           'POST /signUp'
         ]
+      },
+      {
+        resources: ['confirm'],
+        permissions: [
+          'POST /email/confirm'
+        ]
       }
     ]
   },

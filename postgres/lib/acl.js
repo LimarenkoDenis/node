@@ -10,7 +10,6 @@ module.exports = (resources, permissions) => {
       if (allowed) {
         next();
       } else {
-        console.log(req.role, resources, permissions);
         return res.status(403).send({
           success: false,
           message: 'No token provided.'

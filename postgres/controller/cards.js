@@ -3,7 +3,7 @@ module.exports = {
   resources: 'cards',
 
   'GET /cards/counts': (req, res) => {
-    res.json({message: 'This should be allowed only for admin'})
+    res.json({ message: 'This should be allowed only for admin' });
   },
 
   'GET /cards': (req, res) => {
@@ -17,7 +17,7 @@ module.exports = {
     const settings = Object.assign(defaultParams, req.query);
     models.Cards.findAll(settings)
     .then(Cards => {
-      res.send('200', Cards);
+      res.status('200').send(Cards);
     }).catch((e) => {
       console.log(JSON.stringify(e));
     });

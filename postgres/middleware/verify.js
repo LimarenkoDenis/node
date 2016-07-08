@@ -9,7 +9,6 @@ module.exports = {
     if (token) {
       jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
-          // req.role = 'guest';
           return res.send('403');
         }
         req.role = decoded.role;

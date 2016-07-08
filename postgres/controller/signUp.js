@@ -1,33 +1,34 @@
 const path = require('path');
 const config = require(path.join(__dirname, '..', 'config', 'gmail.js'));
-const models = require('../models');
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport(config.transport);
-
 module.exports = {
   resources: 'signUp',
   'POST /signUp': (req, res) => {
     const recipient = req.body.email;
-    if(recipient){
-      const mailOptions = {
-        from: '"Fred" <foo@blurdybloop.com>', // sender address
-        to: recipient, // list of receivers
-        subject: 'Hello', // Subject line
-        // text: 'http://localhost:8080/#/email/confirm', // plaintext body
-        html: ` <b><a href="http://localhost:8080/#/email/confirm">
-        http://localhost:8080/#/email/confirm
-        <a></b>` // html body
-      };
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log('Message sent: ' + info.response);
-        res.send('200')
-      });
-    }else{
-      res.end('403')
-    }
-  }
+    const password = req.body.password;
+    const name = req.body.name;
+
+    const mailOptions = {
+      from: '"Fred" <foo@blurdybloop.com>',
+      to: recipient,
+      subject: 'Hello',
+      text: 'http://localhost:8080/#/email/confirm',
+      html: `<b><a href="http://localhost:8080/#/email/confirm/password=${password}&name=${name}">
+        http://localhost:8080/#/email/confirm?password=${password}&name=${name}
+        <a></b>`
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log(`Message sent: ${info.response}`);
+      return res.send('200');
+    });
+  },
+
+  // 'GET /email/confirm': (req, res) => {
+  //   console.log('obj');
+  // }
 };
