@@ -48,7 +48,6 @@ module.exports = {
   'POST /signUp': (req, res) => {
     const recipient = req.body.email;
     const token = jwt.sign(req.body, config.secret);
-    console.log(token);
     const mailOptions = getMailOptions(recipient, token);
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -68,13 +67,14 @@ module.exports = {
         role: 'user',
       };
       const settings = Object.assign(defaultValue, user);
-      console.log(settings);
       return models.Users.create(settings)
-      .then(() => {
-        res.end('200');
-      }).catch((e) => {
-        console.log(JSON.stringify(e));
-      });
+        .then(() => {
+          res.end('200');
+        }).catch((e) => {
+          console.log(JSON.stringify(e));
+        });
+    } else {
+      return res.end('500')
     }
   }
 };
