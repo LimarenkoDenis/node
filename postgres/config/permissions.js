@@ -3,12 +3,17 @@ module.exports = [
     roles: ['guest'],
     allows: [
       {
-        resources: 'cards',
-        permissions: 'get'
+        resources: ['cards'],
+        permissions: [
+          'GET /cards'
+        ]
       },
       {
         resources: ['authenticate', 'signUp'],
-        permissions: ['post']
+        permissions: [
+          'POST /authenticate',
+          'POST /signUp'
+        ]
       }
     ]
   },
@@ -16,12 +21,34 @@ module.exports = [
     roles: ['admin'],
     allows: [
       {
-        resources: 'cards',
-        permissions: ['get', 'post', 'put', 'delete']
+        resources: ['cards'],
+        permissions: [
+          'GET /cards',
+          'GET /cards/counts',
+          'POST /cards',
+          'PUT /cards/:id',
+          'DELETE /cards/:id'
+        ]
       },
       {
         resources: ['users'],
-        permissions: ['get']
+        permissions: [
+          'GET /users'
+        ]
+      }
+    ]
+  },
+  {
+    roles: ['user'],
+    allows: [
+      {
+        resources: ['cards'],
+        permissions: [
+          'GET /cards',
+          'POST /cards',
+          'PUT /cards/:id',
+          'DELETE /cards/:id'
+        ]
       }
     ]
   }

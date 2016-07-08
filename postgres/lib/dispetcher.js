@@ -10,8 +10,9 @@ module.exports = {
         for (action in controller) {
           const route = action.match(/(GET|POST|PUT|PATCH|DELETE)\s(.*)?/i);
           if (route) {
+            console.log('act',action);
             app[route[1].toLowerCase()](route[2],
-              acl(controller.resources, route[1].toLowerCase()),
+              acl(controller.resources, action),
               controller[action]);
           }
         }
