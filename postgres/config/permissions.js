@@ -9,16 +9,16 @@ module.exports = [
         ]
       },
       {
-        resources: ['authenticate', 'signUp'],
+        resources: ['authenticate'],
         permissions: [
           'POST /authenticate',
           'POST /signUp'
         ]
       },
       {
-        resources: ['confirm'],
+        resources: ['authenticate'],
         permissions: [
-          'POST /email/confirm'
+          'GET /email/confirm'
         ]
       }
     ]

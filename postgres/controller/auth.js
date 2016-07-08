@@ -3,6 +3,9 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 const jwt = require('jsonwebtoken');
 const models = require('../models');
+const nodemailer = require('nodemailer');
+const getMailOptions = require(path.join(__dirname, '..', 'lib', 'mail.js'));
+const transporter = nodemailer.createTransport(config.transport);
 
 module.exports = {
   resources: 'authenticate',
@@ -38,5 +41,39 @@ module.exports = {
     }).catch((e) => {
       console.log(JSON.stringify(e));
     });
+  },
+
+  'POST /signUp': (req, res) => {
+    const recipient = req.body.email;
+    // const password = req.body.password;
+    // const name = req.body.name;
+    const token = jwt.sign(req.body, config.secret);
+    console.log(token);
+    const mailOptions = getMailOptions(recipient, token);
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log(`Message sent: ${info.response}`);
+      return res.send('200');
+    });
+  },
+
+  'GET /email/confirm': (req, res) => {
+    const token = req.query.key;
+    if (token) {
+      const user = jwt.verify(token, config.secret);
+      const defaultValue = {
+        role: 'user',
+      };
+      const settings = Object.assign(defaultValue, user);
+      return models.Users.create(settings)
+      .then(() => {
+        res.end('200');
+      }).catch((e) => {
+        console.log(JSON.stringify(e));
+      });
+    }
   }
 };
