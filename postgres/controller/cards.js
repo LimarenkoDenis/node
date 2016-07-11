@@ -1,4 +1,5 @@
-const models = require('../models');
+const models = require('./../models');
+
 module.exports = {
   resources: 'cards',
 
@@ -8,7 +9,7 @@ module.exports = {
 
   'GET /cards': (req, res) => {
     const defaultParams = {
-      limit: 5,
+      limit: 4,
       offset: 0,
       order: [
         ['updatedAt', 'DESC']

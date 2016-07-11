@@ -4,7 +4,7 @@ const acl = require('./acl.js');
 
 module.exports = {
   init: (app) => {
-    glob('controller/*.js', (er, files) => {
+    glob('controller/*.js', function (er, files) {
       files.map(file => {
         const controller = require(path.join('..', file));
         for (action in controller) {
